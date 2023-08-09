@@ -25,7 +25,7 @@ const NewTask = ({ stage }) => {
     <section
       className={`absolute left-0 top-0 flex h-[100dvh] w-full items-center justify-center bg-slate-800/10 p-10 backdrop-blur-sm`}
     >
-      <div className="flex w-full flex-col gap-2 rounded-lg bg-slate-900 p-5 text-slate-300 md:w-96">
+      <div className="flex w-full flex-col gap-2 rounded-lg bg-slate-900 p-5 text-xs text-slate-300 md:w-96 md:text-base">
         <div className="flex gap-1">
           <span className="capitalize">{stage}</span>&gt;<span>New Task</span>
         </div>

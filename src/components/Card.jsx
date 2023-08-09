@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import { AiOutlineEdit, AiOutlineDelete, AiOutlineCheck } from "react-icons/ai";
+import { RiDraggable } from "react-icons/ri";
 import { TaskContext } from "../context/TaskProvider";
 
 const Card = ({ data }) => {
@@ -10,16 +11,6 @@ const Card = ({ data }) => {
     useContext(TaskContext);
   const [deleteAlert, setDeleteAlert] = useState(false);
 
-  const handleDeleteTask = () => {
-    handleDelete(data.id);
-    setDeleteAlert(false);
-  };
-
-  const handleOnDrag = (e) => {
-    e.dataTransfer.setData("id", data.id);
-    setDragOver(true);
-  };
-
   const handleChangeTagSelect = (e) => {
     setTag(e.target.value);
     handleChangeTag(data.id, e.target.value);
@@ -28,6 +19,16 @@ const Card = ({ data }) => {
   const handleChangeTaskText = () => {
     handleChangeTask(data.id, input);
     setEdit(false);
+  };
+
+  const handleDeleteTask = () => {
+    handleDelete(data.id);
+    setDeleteAlert(false);
+  };
+
+  const handleOnDrag = (e) => {
+    e.dataTransfer.setData("id", data.id);
+    setDragOver(true);
   };
 
   return (
@@ -58,7 +59,8 @@ const Card = ({ data }) => {
           </div>
         </div>
       )}
-      <div className="w-1/2 pl-4 2xl:w-2/3">
+      <div className="flex w-1/2 items-center pl-4 2xl:w-2/3">
+        <RiDraggable size={20} className="cursor-move" />
         {edit ? (
           <input
             autoFocus
