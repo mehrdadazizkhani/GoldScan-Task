@@ -18,15 +18,33 @@ const TaskProvider = ({ children }) => {
   };
 
   const handleDelete = (id) => {
-    const updatedTasks = tasks.filter((task) => !task.id === id);
+    const updatedTasks = tasks.filter((task) => task.id !== id);
     setTasks(updatedTasks);
-    localStorage.setItem("tasks", JSON.stringify(tasks));
+    localStorage.setItem("tasks", JSON.stringify(updatedTasks));
   };
 
   const handleChangeStage = (id, stage) => {
     const updatedTasks = tasks.map((task) =>
       task.id === id ? { ...task, stage: stage } : task,
     );
+    setTasks(updatedTasks);
+    localStorage.setItem("tasks", JSON.stringify(updatedTasks));
+  };
+
+  const handleChangeTag = (id, tag) => {
+    const updatedTasks = tasks.map((task) =>
+      task.id === id ? { ...task, tag: tag } : task,
+    );
+
+    setTasks(updatedTasks);
+    localStorage.setItem("tasks", JSON.stringify(updatedTasks));
+  };
+
+  const handleChangeTask = (id, taskText) => {
+    const updatedTasks = tasks.map((task) =>
+      task.id === id ? { ...task, task: taskText } : task,
+    );
+
     setTasks(updatedTasks);
     localStorage.setItem("tasks", JSON.stringify(updatedTasks));
   };
@@ -42,6 +60,8 @@ const TaskProvider = ({ children }) => {
         handleDelete,
         handleChangeStage,
         setDragOver,
+        handleChangeTag,
+        handleChangeTask,
       }}
     >
       {children}

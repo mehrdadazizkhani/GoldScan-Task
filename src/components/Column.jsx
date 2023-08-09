@@ -26,10 +26,10 @@ const Column = ({ title, tasks, stage }) => {
       <div
         onDrop={handleOnDrop}
         onDragOver={handleOnDragOver}
-        className="relative flex min-h-[40px] w-full flex-col gap-1 p-2 lg:min-h-[50px]"
+        className="relative flex min-h-[56px] w-full flex-col gap-1 p-2 md:min-h-[64px]"
       >
         {dragOver && (
-          <div className="absolute left-0 top-0 h-full w-full animate-pulse rounded-lg border border-dashed border-green-700"></div>
+          <div className="absolute left-0 top-0 h-full w-full animate-pulse rounded-lg border-2 border-dotted border-slate-700"></div>
         )}
         {tasksByStage.map((card) => (
           <Card key={card.id} data={card} />

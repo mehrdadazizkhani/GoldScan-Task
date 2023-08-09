@@ -6,7 +6,8 @@ const Card = ({ data }) => {
   const [tag, setTag] = useState(data.tag);
   const [edit, setEdit] = useState(false);
   const [input, setInput] = useState(data.task);
-  const { handleDelete, setDragOver } = useContext(TaskContext);
+  const { handleDelete, setDragOver, handleChangeTag, handleChangeTask } =
+    useContext(TaskContext);
   const [deleteAlert, setDeleteAlert] = useState(false);
 
   const handleDeleteTask = () => {
@@ -17,6 +18,16 @@ const Card = ({ data }) => {
   const handleOnDrag = (e) => {
     e.dataTransfer.setData("id", data.id);
     setDragOver(true);
+  };
+
+  const handleChangeTagSelect = (e) => {
+    setTag(e.target.value);
+    handleChangeTag(data.id, e.target.value);
+  };
+
+  const handleChangeTaskText = () => {
+    handleChangeTask(data.id, input);
+    setEdit(false);
   };
 
   return (
@@ -64,26 +75,36 @@ const Card = ({ data }) => {
         <select
           value={tag}
           className="bg-transparent text-xs"
-          onChange={(e) => setTag(e.target.value)}
+          onChange={handleChangeTagSelect}
         >
           <option value="low">Low</option>
           <option value="normal">Normal</option>
           <option value="high">High</option>
         </select>
         <div
-          className={`flex aspect-square h-full items-center justify-center rounded-full ${
-            edit ? "bg-green-700 text-slate-300" : "bg-transparent/10"
+          className={`relative flex aspect-square h-full items-center justify-center rounded-full ${
+            edit
+              ? "bg-slate-700 text-slate-300 hover:bg-slate-800"
+              : "bg-transparent/10 hover:bg-transparent/20"
           }`}
         >
+          <div
+            className={`${
+              edit ? "block" : "hidden"
+            } absolute left-0 top-0 h-full w-full animate-ping rounded-full bg-slate-500`}
+          ></div>
           {edit ? (
-            <AiOutlineCheck onClick={() => setEdit(false)} />
+            <AiOutlineCheck
+              onClick={handleChangeTaskText}
+              className="absolute z-10"
+            />
           ) : (
             <AiOutlineEdit onClick={() => setEdit(true)} />
           )}
         </div>
         <div
           onClick={() => setDeleteAlert(true)}
-          className="flex aspect-square h-full items-center justify-center rounded-full bg-transparent/10"
+          className="flex aspect-square h-full items-center justify-center rounded-full bg-transparent/10 hover:bg-transparent/20"
         >
           <AiOutlineDelete />
         </div>
