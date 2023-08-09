@@ -5,12 +5,39 @@ import { TaskContext } from "../context/TaskProvider";
 
 const Column = ({ title, tasks, stage }) => {
   const tasksByStage = tasks.filter((task) => task.stage === stage);
-  const { handleChangeStage, setOpenModal, dragOver, setDragOver } =
-    useContext(TaskContext);
+  const {
+    handleChangeStage,
+    setOpenModal,
+    dragOver,
+    setDragOver,
+    sorts,
+    setSorts,
+  } = useContext(TaskContext);
+  const colSort = sorts.filter((sort) => sort.stage === stage)[0].isSorted;
+
+  const compareFn = (a, b) => {
+    if (a.tag < b.tag) {
+      return -1;
+    }
+    if (a.tag > b.tag) {
+      return 1;
+    }
+    return 0;
+  };
+
+  colSort && tasksByStage.sort(compareFn);
 
   const handleOnDrop = (e) => {
     handleChangeStage(e.dataTransfer.getData("id"), stage);
     setDragOver(false);
+  };
+
+  const handleSort = () => {
+    const updatedSorts = sorts.map((sort) =>
+      sort.stage === stage ? { ...sort, isSorted: !colSort } : sort,
+    );
+    setSorts(updatedSorts);
+    localStorage.setItem("sorts", JSON.stringify(updatedSorts));
   };
 
   const handleOnDragOver = (e) => {
@@ -22,7 +49,22 @@ const Column = ({ title, tasks, stage }) => {
       name={stage}
       className="flex h-fit w-full flex-col justify-between gap-5 rounded-lg bg-slate-200 p-3 text-slate-900 lg:w-1/3"
     >
-      <h2 className="text-base font-medium lg:text-xl">{title}</h2>
+      <div className="flex items-center justify-between">
+        <h2 className="text-base font-medium lg:text-xl">{title}</h2>
+        <div
+          onClick={handleSort}
+          className={`flex cursor-pointer select-none items-center gap-2 uppercase`}
+        >
+          <div
+            className={`flex h-4 w-8 rounded-full bg-slate-600 p-1 ${
+              !colSort ? "justify-start" : " justify-end"
+            }`}
+          >
+            <div className="aspect-square h-full rounded-full bg-slate-300"></div>
+          </div>
+          sort
+        </div>
+      </div>
       <div
         onDrop={handleOnDrop}
         onDragOver={handleOnDragOver}

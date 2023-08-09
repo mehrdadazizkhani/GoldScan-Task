@@ -3,7 +3,7 @@ import { TaskContext } from "../context/TaskProvider";
 
 const NewTask = ({ stage }) => {
   const { setOpenModal, handleAdd } = useContext(TaskContext);
-  const [tag, setTag] = useState("normal");
+  const [tag, setTag] = useState("1");
   const [task, setTask] = useState("");
 
   const handleAddTask = () => {
@@ -38,13 +38,13 @@ const NewTask = ({ stage }) => {
           className="w-full rounded-md bg-slate-700 p-2"
         />
         <select
-          defaultValue="normal"
+          defaultValue="1"
           onChange={(e) => setTag(e.target.value)}
           className="rounded-md bg-slate-700 p-2"
         >
-          <option value="low">Low</option>
-          <option value="normal">Normal</option>
-          <option value="high">High</option>
+          <option value="0">High</option>
+          <option value="1">Normal</option>
+          <option value="2">Low</option>
         </select>
         <div className="flex w-full gap-1">
           <button

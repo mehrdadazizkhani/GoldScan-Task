@@ -11,6 +11,15 @@ const TaskProvider = ({ children }) => {
   );
   const [openModal, setOpenModal] = useState({ open: false, stage: "todo" });
   const [dragOver, setDragOver] = useState(false);
+  const [sorts, setSorts] = useState(
+    localStorage.getItem("sorts")
+      ? JSON.parse(localStorage.getItem("sorts"))
+      : [
+          { stage: "todo", isSorted: false },
+          { stage: "doing", isSorted: false },
+          { stage: "done", isSorted: false },
+        ],
+  );
 
   const handleAdd = (task) => {
     tasks.push(task);
@@ -55,6 +64,8 @@ const TaskProvider = ({ children }) => {
         tasks,
         openModal,
         dragOver,
+        sorts,
+        setSorts,
         setOpenModal,
         handleAdd,
         handleDelete,

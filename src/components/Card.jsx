@@ -77,9 +77,9 @@ const Card = ({ data }) => {
           className="bg-transparent text-xs"
           onChange={handleChangeTagSelect}
         >
-          <option value="low">Low</option>
-          <option value="normal">Normal</option>
-          <option value="high">High</option>
+          <option value="2">Low</option>
+          <option value="1">Normal</option>
+          <option value="0">High</option>
         </select>
         <div
           className={`relative flex aspect-square h-full items-center justify-center rounded-full ${
@@ -111,9 +111,9 @@ const Card = ({ data }) => {
       </div>
       <div
         className={`${
-          data.tag === "low"
+          data.tag === "2"
             ? "bg-blue-300"
-            : data.tag === "high"
+            : data.tag === "0"
             ? " bg-red-300"
             : " bg-slate-400"
         } absolute bottom-0 left-0 h-full w-2`}
