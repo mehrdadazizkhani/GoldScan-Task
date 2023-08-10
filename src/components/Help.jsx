@@ -55,7 +55,7 @@ const Help = () => {
                 choosing task priority, the color of the priority label on the
                 bottom side of the task card will change.
                 <br />
-                br Priority labels color coded as follows:
+                Priority labels color coded as follows:
               </p>
               <ul className="py-2 pl-5">
                 <li className="flex items-center gap-2 text-red-300">
