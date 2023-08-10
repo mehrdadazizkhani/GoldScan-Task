@@ -1,4 +1,3 @@
-import { stringify } from "postcss";
 import React, { createContext, useState } from "react";
 
 export const TaskContext = createContext();
@@ -12,6 +11,7 @@ const TaskProvider = ({ children }) => {
   const [openModal, setOpenModal] = useState({ open: false, stage: "todo" });
   const [openClear, setOpenClear] = useState({ open: false, stage: "todo" });
   const [dragOver, setDragOver] = useState(false);
+  const [help, setHelp] = useState(localStorage.getItem("help") ? false : true);
   const [sorts, setSorts] = useState(
     localStorage.getItem("sorts")
       ? JSON.parse(localStorage.getItem("sorts"))
@@ -74,6 +74,8 @@ const TaskProvider = ({ children }) => {
         dragOver,
         sorts,
         openClear,
+        help,
+        setHelp,
         setSorts,
         handleClear,
         setOpenModal,

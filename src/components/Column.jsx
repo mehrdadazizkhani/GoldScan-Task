@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
 import Card from "./Card";
 import { TaskContext } from "../context/TaskProvider";
