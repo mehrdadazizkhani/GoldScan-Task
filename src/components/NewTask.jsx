@@ -5,9 +5,30 @@ const NewTask = ({ stage }) => {
   const { setOpenModal, handleAdd } = useContext(TaskContext);
   const [tag, setTag] = useState("1");
   const [task, setTask] = useState("");
+  const monthNames = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
 
   const handleAddTask = () => {
     const now = new Date();
+    const date = `${monthNames[now.getMonth()]} ${now
+      .getDay()
+      .toString()
+      .padStart(2, "0")} ${now.getFullYear()} - ${now
+      .getHours()
+      .toString()
+      .padStart(2, "0")}:${now.getMinutes().toString().padStart(2, "0")}`;
     let id = now.getFullYear().toString();
     id += (now.getMonth < 9 ? "0" : "") + now.getMonth().toString();
     id += (now.getDate < 10 ? "0" : "") + now.getDate().toString();
@@ -16,7 +37,7 @@ const NewTask = ({ stage }) => {
     id += (now.getDate < 60 ? "0" : "") + now.getSeconds().toString();
     id += (now.getDate < 1000 ? "0" : "") + now.getMilliseconds().toString();
     if (task) {
-      handleAdd({ id: id, stage: stage, task: task, tag: tag });
+      handleAdd({ id: id, stage: stage, task: task, tag: tag, date: date });
       setOpenModal({ ...setOpenModal, open: false });
     }
   };

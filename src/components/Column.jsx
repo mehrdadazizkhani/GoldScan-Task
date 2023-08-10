@@ -2,9 +2,10 @@ import React, { useContext, useState } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
 import Card from "./Card";
 import { TaskContext } from "../context/TaskProvider";
+import { VscClearAll } from "react-icons/vsc";
 
 const Column = ({ title, tasks, stage }) => {
-  const tasksByStage = tasks.filter((task) => task.stage === stage);
+  const tasksByStage = tasks.filter((task) => task.stage === stage).reverse();
   const {
     handleChangeStage,
     setOpenModal,
@@ -12,6 +13,7 @@ const Column = ({ title, tasks, stage }) => {
     setDragOver,
     sorts,
     setSorts,
+    setOpenClear,
   } = useContext(TaskContext);
   const colSort = sorts.filter((sort) => sort.stage === stage)[0].isSorted;
 
@@ -47,31 +49,40 @@ const Column = ({ title, tasks, stage }) => {
   return (
     <div
       name={stage}
-      className="flex h-fit w-full flex-col justify-between gap-5 rounded-lg bg-slate-200 p-3 text-slate-900 lg:w-1/3"
+      className="flex h-fit w-full flex-col justify-between gap-5 rounded-lg bg-slate-600 p-3 text-slate-300 lg:w-1/3"
     >
       <div className="flex items-center justify-between">
         <h2 className="text-base font-medium lg:text-xl">{title}</h2>
-        <div
-          onClick={handleSort}
-          className={`flex cursor-pointer select-none items-center gap-2 uppercase`}
-        >
+        <div className="flex items-center gap-3 text-sm md:text-base">
           <div
-            className={`flex h-4 w-8 rounded-full bg-slate-600 p-1 ${
-              !colSort ? "justify-start" : " justify-end"
-            }`}
+            onClick={() => setOpenClear({ open: true, stage: stage })}
+            className={`flex cursor-pointer select-none items-center gap-2 uppercase`}
           >
-            <div className="aspect-square h-full rounded-full bg-slate-300"></div>
+            <VscClearAll size={20} />
+            Clear all
           </div>
-          sort
+          <div
+            onClick={handleSort}
+            className={`flex cursor-pointer select-none items-center gap-2 uppercase`}
+          >
+            <div
+              className={`flex h-4 w-8 rounded-full bg-slate-400 p-0.5 ${
+                !colSort ? "justify-start" : " justify-end"
+              }`}
+            >
+              <div className="aspect-square h-full rounded-full bg-slate-600"></div>
+            </div>
+            sort
+          </div>
         </div>
       </div>
       <div
         onDrop={handleOnDrop}
         onDragOver={handleOnDragOver}
-        className="relative flex min-h-[56px] w-full flex-col gap-1 p-2 md:min-h-[64px]"
+        className="relative flex min-h-[72px] w-full flex-col gap-1 p-2 md:min-h-[80px]"
       >
         {dragOver && (
-          <div className="absolute left-0 top-0 h-full w-full animate-pulse rounded-lg border-2 border-dotted border-slate-700"></div>
+          <div className="absolute left-0 top-0 h-full w-full animate-pulse rounded-lg border-2 border-dotted border-slate-300"></div>
         )}
         {tasksByStage.map((card) => (
           <Card key={card.id} data={card} />
@@ -79,7 +90,7 @@ const Column = ({ title, tasks, stage }) => {
       </div>
       <div
         onClick={() => setOpenModal({ open: true, stage: stage })}
-        className="group flex cursor-pointer items-center gap-2 rounded-md p-2 text-xs transition-all duration-300 hover:bg-slate-300 md:text-sm lg:text-base"
+        className="group flex cursor-pointer items-center gap-2 rounded-md p-2 text-xs transition-all duration-300 hover:bg-slate-500 md:text-sm lg:text-base"
       >
         <AiOutlinePlus className="transition-all duration-300 group-hover:rotate-90" />
         Add a card

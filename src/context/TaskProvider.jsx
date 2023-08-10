@@ -10,6 +10,7 @@ const TaskProvider = ({ children }) => {
       : [],
   );
   const [openModal, setOpenModal] = useState({ open: false, stage: "todo" });
+  const [openClear, setOpenClear] = useState({ open: false, stage: "todo" });
   const [dragOver, setDragOver] = useState(false);
   const [sorts, setSorts] = useState(
     localStorage.getItem("sorts")
@@ -58,6 +59,13 @@ const TaskProvider = ({ children }) => {
     localStorage.setItem("tasks", JSON.stringify(updatedTasks));
   };
 
+  const handleClear = () => {
+    const updatedTasks = tasks.filter((task) => task.stage !== openClear.stage);
+    setTasks(updatedTasks);
+    localStorage.setItem("tasks", JSON.stringify(updatedTasks));
+    setOpenClear({ ...openClear, open: false });
+  };
+
   return (
     <TaskContext.Provider
       value={{
@@ -65,7 +73,9 @@ const TaskProvider = ({ children }) => {
         openModal,
         dragOver,
         sorts,
+        openClear,
         setSorts,
+        handleClear,
         setOpenModal,
         handleAdd,
         handleDelete,
@@ -73,6 +83,7 @@ const TaskProvider = ({ children }) => {
         setDragOver,
         handleChangeTag,
         handleChangeTask,
+        setOpenClear,
       }}
     >
       {children}
