@@ -16,17 +16,12 @@ function App() {
     setHelp,
   } = useContext(TaskContext);
 
-  const handleOpen = () => {
-    setHelp(true);
-    localStorage.setItem("help", "helped");
-  };
-
   return (
     <main className="min-h-[100dvh] w-full flex-col gap-2 bg-gradient-to-bl from-slate-900 to-slate-800 p-4">
       <header className="container m-auto mb-4 flex justify-between rounded-lg bg-slate-700 p-4 text-xs text-slate-200 lg:text-base">
         <div className="flex items-center gap-2">
           <button
-            onClick={handleOpen}
+            onClick={() => setHelp(true)}
             className={`relative rounded-md bg-slate-500 px-2 text-slate-100 ${
               localStorage.getItem("help") ? "animate-none" : "animate-pulse"
             }`}

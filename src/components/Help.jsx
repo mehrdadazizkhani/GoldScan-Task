@@ -6,6 +6,12 @@ import { TaskContext } from "../context/TaskProvider";
 
 const Help = () => {
   const { setHelp } = useContext(TaskContext);
+
+  const handleClose = () => {
+    setHelp(false);
+    localStorage.setItem("help", "helped");
+  };
+
   return (
     <section className="fixed left-0 top-0 z-[500] flex h-[100dvh] w-full items-center justify-center  bg-slate-200/10 p-10 backdrop-blur-sm">
       <div className="container flex h-full items-center justify-center rounded-lg">
@@ -13,7 +19,7 @@ const Help = () => {
           <div className="flex flex-col justify-center gap-5 bg-slate-900 p-5 text-sm text-slate-300 lg:text-base">
             <div className="flex flex-col gap-2">
               <AiOutlinePlus
-                onClick={() => setHelp(false)}
+                onClick={handleClose}
                 className="mb-5 rotate-45 cursor-pointer rounded-full bg-slate-800"
                 size={20}
               />
@@ -123,7 +129,7 @@ const Help = () => {
               </p>
             </div>
             <button
-              onClick={() => setHelp(false)}
+              onClick={handleClose}
               className="rounded-md bg-slate-700 py-2 hover:bg-slate-600"
             >
               Close
